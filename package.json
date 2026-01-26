@@ -5,10 +5,16 @@
     "dev": "nuxi dev",
     "build": "nuxi build",
     "generate": "nuxi generate",
-    "preview": "nuxi preview"
+    "preview": "nuxi preview",
+    "lint:md": "markdownlint \"content/**/*.md\" README.md",
+    "lint:links": "markdown-link-check README.md",
+    "lint:docs": "npm run lint:md && npm run lint:links"
   },
   "devDependencies": {
     "content-wind": "latest",
+    "markdown-link-check": "^3.10.3",
+    "markdownlint": "^0.32.1",
+    "markdownlint-cli": "^0.39.0",
     "nuxt": "latest"
   }
 }

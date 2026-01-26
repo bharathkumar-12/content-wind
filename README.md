@@ -1,27 +1,55 @@
-# Content Wind Starter (Refreshed)
+# Lean Product Docs Site
 
-A production-ready, content-first site powered by Nuxt 3, Nuxt Content, and the Content Wind theme. This repo focuses on clarity, accessibility, and maintainability so it can serve as a portfolio-quality starter or a lightweight documentation site.
+A production-ready, content-first site for shipping product docs, playbooks, and release notes that small teams can maintain without a CMS.
 
-## What’s inside
+## Problem & target users
 
-- Nuxt 3 with document-driven routing from Nuxt Content
-- TailwindCSS utilities with dark/light mode baked in by the theme
-- Reusable UI primitives for Markdown-driven pages (e.g., `::button-link`, `::markdown-block`)
-- Prerendering for `/` out of the box; generate or build for other hosting targets
+- **Problem**: Teams ship features faster than they ship clear docs. Changes, runbooks, and onboarding guides get scattered across tools.
+- **Target users**: Product managers, engineers, and customer-facing teams who need a single, readable source of truth.
+- **Primary use cases**: Publish feature updates with next steps, maintain runbooks/troubleshooting guides, share onboarding checklists.
 
-## UI/UX principles applied
+## Success criteria
 
-- Clear hierarchy and generous whitespace for readable, scannable pages
-- Mobile-first layout; comfortable tap targets and line lengths
-- Accessible focus states and keyboard-friendly code samples
-- Primary/secondary call-to-action patterns with subtle transitions
+- New doc published in minutes (Markdown) without touching layouts.
+- Readers can find the right page via auto-generated nav and scannable headings.
+- Clear primary/secondary actions on every page (e.g., view feature, contact support).
+- Works on mobile and is keyboard-accessible.
 
-## Project structure
+## MVP feature set
 
-- `content/` – Markdown pages with front-matter for navigation and SEO
-- `components/content/` – Presentation-only building blocks used inside Markdown
-- `app.config.ts` – Theme-level configuration (cover image, social links)
-- `nuxt.config.ts` – Extends the Content Wind theme and prerender rules
+- Document-driven routing with front-matter for navigation/SEO.
+- Reusable call-to-action buttons with primary/ghost variants and safe external handling.
+- Styled markdown callouts for readable examples and code.
+- Light/dark mode following system preference.
+- Prerendered home for fast first load; generate/build for hosting targets.
+- Simple heading-based search page to find docs quickly.
+- Changelog layout to keep release notes consistent.
+
+## What it does NOT do
+
+- No WYSIWYG or CMS admin panel (Markdown-first authoring).
+- No authentication, comments, or search index baked in.
+- No complex analytics; you can add your own provider.
+
+## Assumptions & constraints
+
+- Content is text-first and maintained in git; authors are comfortable editing Markdown.
+- Small team ownership; prioritize clarity over configurability.
+- Keep bundle lean; avoid extra deps unless required for a real need.
+
+## Architecture & structure
+
+- `content/` – Markdown pages with front-matter for navigation/SEO.
+- `components/content/` – Presentation-only building blocks used inside Markdown (e.g., `ButtonLink`, `MarkdownBlock`).
+- `app.config.ts` – Theme-level configuration (cover image, socials).
+- `nuxt.config.ts` – Extends Content Wind and prerender rules.
+
+## UX principles
+
+- Clear hierarchy and whitespace; short headings and scannable bullets.
+- Mobile-first layout with generous tap targets and focus-visible states.
+- Single primary action plus a secondary ghost action when needed.
+- Code/markdown samples are scrollable and readable on small screens.
 
 ## Getting started
 
@@ -30,7 +58,7 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:3000. Edit files in `content/` to see instant updates.
+Open http://localhost:3000 and edit files in `content/`.
 
 ### Available scripts
 
@@ -38,23 +66,45 @@ Then open http://localhost:3000. Edit files in `content/` to see instant updates
 - `npm run build` – Production build (server style)
 - `npm run generate` – Static export for CDN/static hosting
 - `npm run preview` – Preview the production build locally
+- `npm run lint:md` – Lint Markdown formatting
+- `npm run lint:links` – Check Markdown links
+- `npm run lint:docs` – Run both docs checks
+
+## Example user flow
+
+1) Create `content/feature-x.md` with `navigation.title`, `head.description`, and a concise summary.
+2) Add a primary `::button-link` to the feature or support form; add a ghost link to docs or release notes.
+3) Preview locally, validate mobile + keyboard navigation, then generate/build and deploy.
+4) Update `content/changelog.md` using the `changelog` layout to record releases.
+
+## Known limitations / trade-offs
+
+- No built-in search; use a hosted search or static index if needed.
+- No auth; assume docs are public or protected at the host/CDN level.
+- Image hosting/CDN not configured; point image URLs to your provider.
+
+## Roadmap (practical)
+
+- Add lightweight client-side search refinements (highlight matches, keyboard nav).
+- Add a small changelog index component for multi-release pages.
+- Add Markdown/link checks to CI (done); keep extending ignore list as needed.
 
 ## Design decisions
 
-- **Purposeful actions**: `ButtonLink` supports primary and ghost variants plus external handling with proper rel/target attributes and focus rings.
-- **Readable demos**: `MarkdownBlock` adds padding, borders, and keyboard scrolling so examples stay legible on mobile and desktop.
-- **Content-first copy**: Home/about pages describe the value of the starter instead of the theme internals.
+- `ButtonLink` includes variants, sizing, focus rings, and safe external defaults for real-world CTAs.
+- `MarkdownBlock` adds padding, borders, and keyboard scrolling to keep examples legible on mobile.
+- Content pages emphasize outcomes and next steps instead of theme boilerplate.
 
 ## Editing guidance
 
-- Keep front-matter `navigation.title` set so pages appear in the auto-generated nav.
+- Set `navigation.title` so pages appear in the auto-generated nav.
 - Add `head` metadata (description, image) for shareable links.
-- Prefer short headings and concise paragraphs; avoid walls of text.
-- Test both dark and light modes and keyboard navigation before shipping.
+- Keep headings short (40–60 chars); lead with outcomes, then steps.
+- Test dark/light mode and keyboard navigation before shipping.
 
 ## Deployment
 
-- Static: `npm run generate` and deploy the `dist/` (symlink to `.output/public`).
+- Static: `npm run generate` and deploy `dist/` (symlink to `.output/public`).
 - Server: `npm run build` then run `.output/server/index.mjs` on your host.
 
 For platform specifics, see the [Nuxt deployment guide](https://nuxt.com/docs/getting-started/deployment).

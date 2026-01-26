@@ -1,0 +1,9 @@
+{
+  "retryOn429": true,
+  "retryCount": 2,
+  "timeout": "10s",
+  "ignorePatterns": [
+    { "pattern": "^http://localhost" },
+    { "pattern": "^mailto:" }
+  ]
+}
