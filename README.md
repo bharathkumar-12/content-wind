@@ -72,10 +72,10 @@ Open http://localhost:3000 and edit files in `content/`.
 
 ## Example user flow
 
-1) Create `content/feature-x.md` with `navigation.title`, `head.description`, and a concise summary.
-2) Add a primary `::button-link` to the feature or support form; add a ghost link to docs or release notes.
-3) Preview locally, validate mobile + keyboard navigation, then generate/build and deploy.
-4) Update `content/changelog.md` using the `changelog` layout to record releases.
+1. Create `content/feature-x.md` with `navigation.title`, `head.description`, and a concise summary.
+2. Add a primary `::button-link` to the feature or support form; add a ghost link to docs or release notes.
+3. Preview locally, validate mobile + keyboard navigation, then generate/build and deploy.
+4. Update `content/changelog.md` using the `changelog` layout to record releases.
 
 ## Known limitations / trade-offs
 

@@ -1,43 +1,57 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { queryContent } from '#content'
+  import { computed, ref } from 'vue';
+  import { queryContent } from '#content';
 
-const searchTerm = ref('')
+  const searchTerm = ref('');
 
-const { data: docs, pending, error } = await useAsyncData('docs-search', () =>
-  queryContent()
-    .only(['_path', 'title', 'description', 'navigation', 'head'])
-    .find()
-)
+  const {
+    data: docs,
+    pending,
+    error,
+  } = await useAsyncData('docs-search', () =>
+    queryContent()
+      .only(['_path', 'title', 'description', 'navigation', 'head'])
+      .find(),
+  );
 
-const results = computed(() => {
-  const term = searchTerm.value.trim().toLowerCase()
-  const items = docs.value || []
-  if (!term) return items.slice(0, 12)
-  return items
-    .map((doc) => ({
-      ...doc,
-      score: [doc.title, doc.description, doc?.head?.description, doc?.navigation?.title]
-        .filter(Boolean)
-        .join(' ')
-        .toLowerCase()
-        .includes(term)
-        ? 1
-        : 0,
-    }))
-    .filter((doc) => doc.score > 0)
-})
+  const results = computed(() => {
+    const term = searchTerm.value.trim().toLowerCase();
+    const items = docs.value || [];
+    if (!term) return items.slice(0, 12);
+    return items
+      .map((doc) => ({
+        ...doc,
+        score: [
+          doc.title,
+          doc.description,
+          doc?.head?.description,
+          doc?.navigation?.title,
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase()
+          .includes(term)
+          ? 1
+          : 0,
+      }))
+      .filter((doc) => doc.score > 0);
+  });
 </script>
 
 <template>
   <div class="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-12 lg:px-12">
     <header class="space-y-3">
-      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Search</p>
-      <h1 class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">
+      <p class="text-sm font-medium text-slate-500 dark:text-slate-400">
+        Search
+      </p>
+      <h1
+        class="text-3xl font-semibold tracking-tight text-slate-900 dark:text-white"
+      >
         Find docs fast
       </h1>
       <p class="text-slate-600 dark:text-slate-300">
-        Type a keyword to filter by title or description. Clear the input to see recent pages.
+        Type a keyword to filter by title or description. Clear the input to see
+        recent pages.
       </p>
     </header>
 
@@ -57,9 +71,16 @@ const results = computed(() => {
     </label>
 
     <section class="min-h-[200px] space-y-4">
-      <div v-if="pending" class="text-slate-500 dark:text-slate-400">Loading…</div>
-      <div v-else-if="error" class="text-red-600 dark:text-red-400">Unable to load docs.</div>
-      <div v-else-if="results.length === 0" class="text-slate-500 dark:text-slate-400">
+      <div v-if="pending" class="text-slate-500 dark:text-slate-400">
+        Loading…
+      </div>
+      <div v-else-if="error" class="text-red-600 dark:text-red-400">
+        Unable to load docs.
+      </div>
+      <div
+        v-else-if="results.length === 0"
+        class="text-slate-500 dark:text-slate-400"
+      >
         No matches yet. Try a different keyword.
       </div>
       <ul v-else class="space-y-3">
@@ -74,8 +95,14 @@ const results = computed(() => {
                 <p class="text-sm font-semibold text-slate-900 dark:text-white">
                   {{ item.navigation?.title || item.title || item._path }}
                 </p>
-                <p class="text-sm text-slate-600 line-clamp-2 dark:text-slate-300">
-                  {{ item.head?.description || item.description || 'No description yet.' }}
+                <p
+                  class="text-sm text-slate-600 line-clamp-2 dark:text-slate-300"
+                >
+                  {{
+                    item.head?.description ||
+                    item.description ||
+                    'No description yet.'
+                  }}
                 </p>
               </div>
               <Icon
