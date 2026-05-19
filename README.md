@@ -108,3 +108,9 @@ Open http://localhost:3000 and edit files in `content/`.
 - Server: `npm run build` then run `.output/server/index.mjs` on your host.
 
 For platform specifics, see the [Nuxt deployment guide](https://nuxt.com/docs/getting-started/deployment).
+
+---
+
+## Maintenance
+
+Last maintenance update: <!--LAST_UPDATED-->2026-05-19<!--/LAST_UPDATED-->
