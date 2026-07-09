@@ -114,3 +114,5 @@ For platform specifics, see the [Nuxt deployment guide](https://nuxt.com/docs/ge
 ## Maintenance
 
 Last maintenance update: <!--LAST_UPDATED-->2026-06-11<!--/LAST_UPDATED-->
+<!-- changelog:2026-07-09 -->
+<!-- Maintenance pass: 2026-07-09 -->
